@@ -1,6 +1,8 @@
 import express from 'express';
 import cors from 'cors';
 
+import canonize from './canonize';
+
 const app = express();
 app.use(cors());
 app.get('/', (req, res) => {
@@ -14,12 +16,12 @@ app.get('/task2A', (req, res) => {
   res.send(sum.toString());
 });
 
-app.get('/task2B',  (req, res) => {
-	var fullname = req.query.fullname;// ? req.query.fullname : undefined;
+app.get('/task2B', (req, res) => {
+  var fullname = req.query.fullname;// ? req.query.fullname : undefined;
   var names = [];
-    if (fullname != undefined){
-      names = fullname.split(' ');
-      switch (names.length) {
+  if (fullname != undefined){
+    names = fullname.split(' ');
+    switch (names.length) {
       case 1:
         res.send(fullname);
         break;
@@ -38,9 +40,14 @@ app.get('/task2B',  (req, res) => {
     // res.send('Invalid fullname');
     // }      не понятна причина ошибки синтаксиса при включенном else.
   }
-console.log(names,names.length);
+console.log(names, names.length);
 }
   );
+
+app.get('/task2C', (req, res) => {
+  const username = canonize(req.query.username);
+  res.send(username);
+});
 
 app.listen(3000, () => {
   console.log('Your app is listening on port 3000!');
